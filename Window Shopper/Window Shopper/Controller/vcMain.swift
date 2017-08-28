@@ -11,6 +11,9 @@ import UIKit
 class vcMain: UIViewController {
     @IBOutlet weak var txtWage: tfCurrency!
     @IBOutlet weak var txtPrice: tfCurrency!
+    @IBOutlet weak var lblResult: UILabel!
+    @IBOutlet weak var btnClear: UIButton!
+    @IBOutlet weak var lblHours: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +26,32 @@ class vcMain: UIViewController {
         
         txtWage.inputAccessoryView = btnCalc
         txtPrice.inputAccessoryView = btnCalc
+        
+        lblResult.isHidden = true
+        lblHours.isHidden = true
+    }
+    
+    @IBAction func onClearTapped(_ sender: Any) {
+        txtWage.text = ""
+        txtPrice.text = ""
+        lblResult.isHidden = true
+        lblHours.isHidden = true
+        
     }
     
     @objc func caclulate() {
-        print("we got here")
+        if let txtWage = txtWage.text, let txtPrice = txtPrice.text {
+            if let wage = Double(txtWage), let price = Double(txtPrice) {
+                view.endEditing(true)
+                
+                lblResult.isHidden = false
+                lblHours.isHidden = false
+                
+                lblResult.text = "\(Wage.getHours(forWage: wage, andPrice: price))"
+            }
+        }
+
+        
     }
 }
 
